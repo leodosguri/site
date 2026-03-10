@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Turma Connect</title>
+
+<style>
+
+body{
+background:#2f3136;
+color:white;
+font-family:Arial;
+}
+
+#chat{
+height:300px;
+overflow:auto;
+background:#36393f;
+padding:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Turma Connect</h1>
+
+<div id="chat"></div>
+
+<input id="name" placeholder="nome">
+
+<input id="msg" placeholder="mensagem">
+
+<button onclick="send()">Enviar</button>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+
+const socket=io()
+
+function send(){
+
+let name=document.getElementById("name").value
+let msg=document.getElementById("msg").value
+
+socket.emit("chat",{name,text:msg,channel:"geral"})
+
+}
+
+socket.on("chat",(data)=>{
+
+let chat=document.getElementById("chat")
+
+chat.innerHTML+=`<p><b>${data.name}</b>: ${data.text}</p>`
+
+})
+
+</script>
+
+</body>
+</html>
